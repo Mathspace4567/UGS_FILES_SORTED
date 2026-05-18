@@ -1,0 +1,14 @@
+/games/*/Build/*.wasm
+  Content-Type: application/wasm
+
+/games/*/Build/*.js
+  Content-Type: application/javascript
+
+/games/*/Build/*.data
+  Content-Type: application/octet-stream
+
+/games/*/Build/*.unityweb
+  Content-Type: application/octet-stream
+
+/games/*/Build/*
+  Cache-Control: public, max-age=31536000, immutable
