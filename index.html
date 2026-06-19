@@ -3,214 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UGS Files Sorted - Ultimate Game Stash</title>
+    <title>Duck Maths | Ultimate Game Stash</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-        
+        :root {
+            --bg-color: #121214;
+            --container-bg: #1a1a1e;
+            --accent-color: #ffcc00; /* Duck Yellow */
+            --text-color: #ffffff;
+            --text-secondary: #a0a0a5;
+            --card-bg: #26262b;
+            --card-hover: #323238;
+        }
+
         body {
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            color: #00ffcc;
-            font-family: 'Press Start 2P', system-ui;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             margin: 0;
-            padding: 20px;
-            line-height: 1.6;
+            padding: 0;
+            overflow-x: hidden;
         }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
+
         header {
-            text-align: center;
-            margin-bottom: 40px;
-            border-bottom: 4px solid #00ffcc;
-            padding-bottom: 20px;
-        }
-        
-        h1 {
-            font-size: 2.5em;
-            text-shadow: 0 0 10px #00ffcc;
-            margin: 0;
-        }
-        
-        .subtitle {
-            color: #ff00aa;
-            font-size: 1.1em;
-        }
-        
-        .nav {
+            background-color: var(--container-bg);
+            padding: 15px 30px;
             display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            justify-content: center;
-            margin: 30px 0;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 20px;
-            border: 3px solid #00ffcc;
-            border-radius: 8px;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--accent-color);
         }
-        
-        .nav a {
-            background: #1a0033;
-            color: #00ffcc;
-            padding: 12px 20px;
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--accent-color);
             text-decoration: none;
-            border: 2px solid #ff00aa;
-            transition: all 0.3s;
-            font-size: 0.9em;
-            min-width: 50px;
-            text-align: center;
         }
-        
-        .nav a:hover {
-            background: #ff00aa;
-            color: #000;
-            transform: scale(1.1);
-            box-shadow: 0 0 15px #ff00aa;
+
+        .search-box {
+            padding: 10px 15px;
+            border-radius: 20px;
+            border: 2px solid #3e3e42;
+            background-color: var(--card-bg);
+            color: white;
+            outline: none;
+            width: 250px;
         }
-        
-        .section {
-            margin-bottom: 50px;
+
+        .search-box:focus {
+            border-color: var(--accent-color);
         }
-        
-        .category {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid #00ffcc;
-            padding: 15px;
-            margin-bottom: 25px;
-            border-radius: 8px;
+
+        main {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
-        
-        .category h2 {
-            margin: 0 0 15px 0;
-            color: #ff00aa;
-            border-bottom: 2px solid #ff00aa;
-            padding-bottom: 8px;
-        }
-        
+
         .game-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 20px;
         }
-        
-        .game-item {
-            background: #1a0033;
-            padding: 15px;
-            border: 2px solid #00ff88;
-            transition: all 0.2s;
-        }
-        
-        .game-item:hover {
-            border-color: #ff00aa;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(255, 0, 170, 0.3);
-        }
-        
-        .game-item a {
-            color: #00ffcc;
-            text-decoration: none;
-            display: block;
-        }
-        
-        .game-item a:hover {
-            color: #ffffff;
-        }
-        
-        footer {
+
+        /* Card Button Elements */
+        .game-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s, border-color 0.2s;
+            cursor: pointer;
+            border: 1px solid #333;
             text-align: center;
-            margin-top: 60px;
-            padding: 20px;
-            border-top: 2px solid #00ffcc;
-            font-size: 0.8em;
-            color: #888;
+            padding: 15px 10px;
         }
-        
-        .minecraft {
-            border-color: #00ccff !important;
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            background-color: var(--card-hover);
+        }
+
+        .game-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .game-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        /* Screen Overlay Container for Frame */
+        .game-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .game-header {
+            background: var(--container-bg);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-btn {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        iframe {
+            flex-grow: 1;
+            border: none;
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>ULTIMATE GAME STASH</h1>
-            <p class="subtitle">Files Sorted by brickyosu • Fork of the Legendary UGS Collection</p>
-            <p style="margin-top: 10px; font-size: 1.1em;">
-                <a href="https://docs.google.com/document/d/1_FmH3BlSBQI7FGgAQL59-ZPe8eCxs35wel6JUyVaG8Q/" 
-                   target="_blank" style="color: #ff00aa;">Original UGS Document</a>
-            </p>
-        </header>
 
-        <div class="nav">
-            <a href="#numbers">0-9</a>
-            <a href="#letters">A-Z</a>
-            <a href="#minecraft" class="minecraft">MINECRAFT</a>
-        </div>
+    <header>
+        <a href="#" class="logo" onclick="closeGame()">🦆 Duck Maths</a>
+        <input type="text" id="search" class="search-box" placeholder="Search games..." onkeyup="filterGames()">
+    </header>
 
-        <div class="section" id="numbers">
-            <div class="category">
-                <h2>NUMBERS (0-9)</h2>
-                <div class="game-grid">
-                    <div class="game-item"><a href="1/" target="_blank">1 - Games</a></div>
-                    <div class="game-item"><a href="2/" target="_blank">2 - Games</a></div>
-                    <div class="game-item"><a href="3/" target="_blank">3 - Games</a></div>
-                    <div class="game-item"><a href="4/" target="_blank">4 - Games</a></div>
-                    <div class="game-item"><a href="6/" target="_blank">6 - Games</a></div>
-                    <div class="game-item"><a href="8/" target="_blank">8 - Games</a></div>
-                    <div class="game-item"><a href="9/" target="_blank">9 - Games</a></div>
-                </div>
+    <main id="mainContent">
+        <h2>All Games</h2>
+        <div class="game-grid">
+            
+            <!-- W FOLDER GAMES -->
+            <div class="game-card" onclick="loadGame('W/clworldshardestgame.html', 'Worlds Hardest Game')">
+                <div class="game-icon">🟥</div>
+                <p class="game-title">World's Hardest Game</p>
             </div>
-        </div>
 
-        <div class="section" id="letters">
-            <div class="category">
-                <h2>A - Z</h2>
-                <div class="game-grid">
-                    <div class="game-item"><a href="A/" target="_blank">A</a></div>
-                    <div class="game-item"><a href="B/" target="_blank">B</a></div>
-                    <div class="game-item"><a href="C/" target="_blank">C</a></div>
-                    <div class="game-item"><a href="D/" target="_blank">D</a></div>
-                    <div class="game-item"><a href="E/" target="_blank">E</a></div>
-                    <div class="game-item"><a href="F/" target="_blank">F</a></div>
-                    <div class="game-item"><a href="G/" target="_blank">G</a></div>
-                    <div class="game-item"><a href="H/" target="_blank">H</a></div>
-                    <div class="game-item"><a href="I/" target="_blank">I</a></div>
-                    <div class="game-item"><a href="J/" target="_blank">J</a></div>
-                    <div class="game-item"><a href="K/" target="_blank">K</a></div>
-                    <div class="game-item"><a href="L/" target="_blank">L</a></div>
-                    <div class="game-item"><a href="M/" target="_blank">M</a></div>
-                    <div class="game-item"><a href="N/" target="_blank">N</a></div>
-                    <div class="game-item"><a href="O/" target="_blank">O</a></div>
-                    <div class="game-item"><a href="P/" target="_blank">P</a></div>
-                    <div class="game-item"><a href="Q/" target="_blank">Q</a></div>
-                    <div class="game-item"><a href="R/" target="_blank">R</a></div>
-                    <div class="game-item"><a href="S/" target="_blank">S</a></div>
-                    <div class="game-item"><a href="T/" target="_blank">T</a></div>
-                    <div class="game-item"><a href="U/" target="_blank">U</a></div>
-                    <div class="game-item"><a href="V/" target="_blank">V</a></div>
-                    <div class="game-item"><a href="W/" target="_blank">W</a></div>
-                    <div class="game-item"><a href="X/" target="_blank">X</a></div>
-                    <div class="game-item"><a href="Y/" target="_blank">Y</a></div>
-                    <div class="game-item"><a href="Z/" target="_blank">Z</a></div>
-                </div>
+            <div class="game-card" onclick="loadGame('W/clwrestlebros.html', 'Wrestle Bros')">
+                <div class="game-icon">🤼</div>
+                <p class="game-title">Wrestle Bros</p>
             </div>
-        </div>
 
-        <div class="section" id="minecraft">
-            <div class="category minecraft">
-                <h2>MINECRAFT SECTION</h2>
-                <div class="game-grid">
-                    <div class="game-item"><a href="minecraft/" target="_blank">🎮 All Minecraft / Eaglercraft Versions</a></div>
-                </div>
+            <div class="game-card" onclick="loadGame('W/clwebecomewhatwebehold.html', 'We Become What We Behold')">
+                <div class="game-icon">📺</div>
+                <p class="game-title">We Become What We Behold</p>
             </div>
-        </div>
 
-        <footer>
-            <p>Made for offline & school use • All games are HTML files • Forked & sorted by community</p>
-            <p><a href="https://github.com/CalcSolver/UGS_FILES_SORTED" target="_blank" style="color:#00ffcc;">GitHub Repository</a></p>
-        </footer>
+            <div class="game-card" onclick="loadGame('W/clwordle.html', 'Wordle')">
+                <div class="game-icon">🟩</div>
+                <p class="game-title">Wordle</p>
+            </div>
+
+            <!-- EXAMPLE FROM ANOTHER FOLDER -->
+            <div class="game-card" onclick="loadGame('1/cl1v1lol.html', '1v1.LOL')">
+                <div class="game-icon">🧱</div>
+                <p class="game-title">1v1.LOL</p>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Fullscreen Player Screen -->
+    <div class="game-container" id="gameScreen">
+        <div class="game-header">
+            <h3 id="currentGameTitle" style="margin:0;">Game Loading...</h3>
+            <button class="close-btn" onclick="closeGame()">Back to Main Menu</button>
+        </div>
+        <iframe id="gameFrame" src=""></iframe>
     </div>
+
+    <script>
+        // Open the game iframe internally
+        function loadGame(gamePath, gameName) {
+            document.getElementById('currentGameTitle').innerText = gameName;
+            document.getElementById('gameFrame').src = gamePath;
+            document.getElementById('gameScreen').style.display = 'flex';
+            document.getElementById('mainContent').style.display = 'none';
+        }
+
+        // Close game and return to main screen
+        function closeGame() {
+            document.getElementById('gameScreen').style.display = 'none';
+            document.getElementById('gameFrame').src = '';
+            document.getElementById('mainContent').style.display = 'block';
+        }
+
+        // Search engine filter logic
+        function filterGames() {
+            const input = document.getElementById('search').value.toLowerCase();
+            const cards = document.getElementsByClassName('game-card');
+            for (let i = 0; i < cards.length; i++) {
+                const title = cards[i].querySelector('.game-title').innerText.toLowerCase();
+                cards[i].style.display = title.includes(input) ? "block" : "none";
+            }
+        }
+    </script>
 </body>
 </html>
