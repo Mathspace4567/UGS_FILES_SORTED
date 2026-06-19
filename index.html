@@ -1,2 +1,295 @@
-// Hardcode the absolute production path fallback targets
-<div class="card" onclick="playGame('https://rawcdn.githack.com/Mathspace4567/UGS_FILES_SORTED/main/W/clwavedash.html', 'Wave Dash')">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duck Maths | Play Unblocked Games</title>
+    <style>
+        /* Duck Maths Palette Config */
+        :root {
+            --bg-main: #0c0d12;
+            --bg-panel: #16171e;
+            --bg-card: #222530;
+            --bg-card-hover: #2e3242;
+            --accent: #ffcc00; /* Duck Yellow */
+            --accent-hover: #e6b800;
+            --text-main: #ffffff;
+            --text-muted: #9fa4b3;
+            --like-green: #2ecc71;
+            --dislike-red: #e74c3c;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Top Navigation Header */
+        header {
+            background-color: var(--bg-panel);
+            padding: 12px 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--accent);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--accent);
+            text-decoration: none;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+        }
+
+        .search-box {
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: 2px solid #323645;
+            background-color: var(--bg-main);
+            color: white;
+            width: 280px;
+            outline: none;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent);
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        h2 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent);
+            padding-left: 12px;
+        }
+
+        /* Front Page Dashboard Grid Layout */
+        .home-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        /* Grid Item Display Blocks */
+        .game-card {
+            background-color: var(--bg-card);
+            border-radius: 12px;
+            border: 2px solid #2d3142;
+            padding: 15px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s, background-color 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            background-color: var(--bg-card-hover);
+        }
+
+        .game-icon {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .game-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin: 0;
+            color: var(--text-main);
+        }
+
+        /* Dedicated Theatre Mode Layout Window System */
+        .theater-layout {
+            display: none; /* Invisible until a card is clicked */
+            grid-template-columns: 3fr 1fr;
+            gap: 25px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 900px) {
+            .theater-layout { grid-template-columns: 1fr; }
+        }
+
+        /* Left side game display elements */
+        .stage-area {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .iframe-wrapper {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background-color: #000;
+            border-radius: 16px;
+            border: 2px solid #2d3142;
+            overflow: hidden;
+            position: relative;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Interactive Controls Area underneath the viewport window */
+        .control-bar {
+            background-color: var(--bg-panel);
+            margin-top: 15px;
+            padding: 15px 20px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #2d3142;
+        }
+
+        .control-bar h3 { margin: 0; font-size: 20px; }
+
+        .btn-group { display: flex; gap: 10px; }
+
+        .action-btn {
+            background-color: var(--bg-card);
+            color: white;
+            border: 1px solid #3a3f54;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+
+        .action-btn:hover { background-color: var(--bg-card-hover); }
+
+        .fullscreen-btn { background-color: var(--accent); color: #000; border: none; }
+        .fullscreen-btn:hover { background-color: var(--accent-hover); }
+
+        /* Active counter feedback styling colors */
+        .liked { color: var(--like-green) !important; border-color: var(--like-green) !important; }
+        .disliked { color: var(--dislike-red) !important; border-color: var(--dislike-red) !important; }
+
+        /* Right Hand Side Catalog Wrapper Menu */
+        .sidebar-panel {
+            background-color: var(--bg-panel);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid #2d3142;
+            max-height: 75vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a class="logo" onclick="showDashboard()">🦆 DUCK MATHS</a>
+        <input type="text" id="search" class="search-box" placeholder="Search unblocked games..." onkeyup="filterCatalog()">
+    </header>
+
+    <main>
+        
+        <!-- DASHBOARD CONTAINER (Visible at launch) -->
+        <div id="dashboardSection">
+            <h2>All Games</h2>
+            <div class="home-grid" id="mainGrid">
+                <!-- Javascript maps items dynamically here for modularity -->
+            </div>
+        </div>
+
+        <!-- THEATER PLAYER VIEW (Visible during playback) -->
+        <div class="theater-layout" id="theaterSection">
+            
+            <!-- Left Panel Frame Output Screen -->
+            <div class="stage-area">
+                <div class="iframe-wrapper" id="videoWrapper">
+                    <iframe id="gameEngine" src=""></iframe>
+                </div>
+                
+                <div class="control-bar">
+                    <h3 id="stageTitle">Loading Title...</h3>
+                    <div class="btn-group">
+                        <button class="action-btn" id="likeBtn" onclick="rateGame('like')">👍 <span id="likeTxt">12</span></button>
+                        <button class="action-btn" id="dislikeBtn" onclick="rateGame('dislike')">👎 <span id="dislikeTxt">2</span></button>
+                        <button class="action-btn fullscreen-btn" onclick="toggleFullscreen()">📺 Fullscreen</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel Sidebar Index Feed Grid -->
+            <div class="sidebar-panel">
+                <h3 style="margin-top:0; margin-bottom:15px; font-size:16px; color:var(--accent);">More Games</h3>
+                <div class="sidebar-grid" id="sideGrid">
+                    <!-- Sidebar list updates here dynamically -->
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+        // Central Data Manifest Array referencing your repository assets natively
+        const gameCatalog = [
+            { id: "wavedash", title: "Wave Dash", folder: "W/clwavedash.html", icon: "🌊", likes: 45, dislikes: 3 },
+            { id: "hardestgame", title: "World's Hardest Game", folder: "W/clworldshardestgame.html", icon: "🟥", likes: 112, dislikes: 14 },
+            { id: "wrestlebros", title: "Wrestle Bros", folder: "W/clwrestlebros.html", icon: "🤼", likes: 89, dislikes: 8 },
+            { id: "behold", title: "We Become What We Behold", folder: "W/clwebecomewhatwebehold.html", icon: "📺", likes: 204, dislikes: 5 },
+            { id: "wordle", title: "Wordle", folder: "W/clwordle.html", icon: "🟩", likes: 34, dislikes: 2 },
+            { id: "1v1lol", title: "1v1.LOL", folder: "1/cl1v1lol.html", icon: "🧱", likes: 512, dislikes: 41 }
+        ];
+
+        let currentActiveGame = null;
+
+        // Render standard home feed
+        function renderHomeGrid() {
+            const grid = document.getElementById('mainGrid');
+            grid.innerHTML = "";
+            gameCatalog.forEach(game => {
+                grid.innerHTML += `
+                    <div class="game-card" onclick="launchGame('${game.id}')">
+                        <div class="game-icon">${game.icon}</div>
+                        <p class="game-title">${game.title}</p>
+                    </div>
+                `;
+            });
+        }
+
+        // Render side carousel menu view lists 
+        function renderSidebarGrid(excludeId) {
+            const grid = document.getElementById('sideGrid');
+            grid.innerHTML = "";
+            gameCatalog.forEach(game => {
+                if(game.id === excludeId) return; // Skip currently playing item
+                grid.innerHTML += `
+                    <div class="game-card" style="flex-direction:row; justify-content:flex-start; gap:15px; padding:10px;" onclick="launchGame('${game.id}')">
